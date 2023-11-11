@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+    }
+
+    button {
+      width: 100%;
+      height: 50%;
+      color: white;
+      font-size: 4rem;
+      font-weight: 600;
+    }
+    .start {
+      background-color: green;
+    }
+    .stop {
+      background-color: red;
+    }
+
+    .delay {
+      height: 2rem;
+      text-align: center;
+    }
+
+    .deaycontainer input {
+      border: none;
+    }
+  </style>
+  <body>
+    <div class="deaycontainer">
+      <label for="delay">Insira o delay</label>
+      <input
+        type="number"
+        name="delay"
+        class="delay"
+        id="delay"
+        placeholder="insira o delay:"
+        value="1"
+      />
+    </div>
+    <button onclick="start()" class="start">start</button>
+    <button onclick="stop()" class="stop">stop</button>
+  </body>
+
+  <script>
+    const fetchOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    };
+    function start() {
+      let getDelay = document.getElementById("delay");
+
+      getDelay = parseInt(getDelay.value);
+      
+      fetch("/api", {
+        ...fetchOptions,
+        body: JSON.stringify({
+          type: "start",
+          delay: getDelay,
+        }),
+      });
+    }
+    function stop() {
+      fetch("/api", {
+        ...fetchOptions,
+        body: JSON.stringify({
+          type: "stop",
+        }),
+      });
+    }
+  </script>
+</html>
